@@ -1,7 +1,11 @@
 from multiprocessing import Pool
 
 # These globals represent corresponding index locations inside the CSV we parse.
-NAME_AND_TITLE_FIELD = 1
+LAST_NAME_FIELD = 5
+FIRST_NAME_FIELD = 6
+MIDDLE_NAME_FIELD = 7
+NPI_FIELD = 0
+ORGANIZATION_FIELD = 4
 TAXONOMY_FIELD = 47
 
 class USAddress:
@@ -14,8 +18,12 @@ class USAddress:
 
 class MedicalDoctor:
     """ A simple doctor data structure """
-    name_and_title = ""
+	last_name      = ""
+	first_name     = ""
+	middle_name    = ""
+	organization   = ""
     address        = USAddress()
+	npi            = ""
     taxonomy       = ""
     specialization = ""
     tags           = ""
@@ -25,6 +33,7 @@ class MedicalDoctor:
         self.specialization = specialization
         self.tags           = tags
 
+# Possible taxonomy index structure
 taxonomies = {'207X00000X': MedicalDoctor('207X00000X', 'Orthopaedic Surgery', ['trauma', 'sports injuries', 'degenerative disease', 'infection', 'tumor', 'congenital disorder'])}
 
 def parse_line(line):

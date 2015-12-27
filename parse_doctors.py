@@ -18,16 +18,23 @@ taxonomy_dict = {}
 
 
 class USAddress:
-    """ A simple address data structure """
+    # A simple address data structure
     street_1 = ""
     street_2 = ""
     city = ""
     state = ""
     zip_code = ""
 
+    # toString for address struct
+    def __repr__(self):
+        return """ Address:
+                   %s %s
+                   %s, %s %s """ % (self.street_1, self.street_2, self.city, self.state,
+                                    self.zip_code)
+
 
 class MedicalDoctor:
-    """ A simple doctor data structure """
+    # A simple doctor data structure
     first_name = ""
     last_name = ""
     middle_name = ""
@@ -41,9 +48,9 @@ class MedicalDoctor:
     def __init__(self, taxonomy, specialization):
         self.taxonomy = taxonomy
         self.specialization = specialization
-    
+
+    # toString for doctor struct
     def __repr__(self):
-        # Problem with newline after Specialization
         return """ Doctor Information:
                    First Name: %s
                    Middle Name: %s
@@ -51,13 +58,17 @@ class MedicalDoctor:
                    Taxonomy: %s
                    Specialization: %s
                    NPI: %s
-                   License: %s """ % (self.first_name, self.middle_name, self.last_name, self.taxonomy, self.specialization, self.npi, self.license)
+                   License: %s """ % (self.first_name, self.middle_name,
+                                      self.last_name, self.taxonomy,
+                                      self.specialization, self.npi,
+                                      self.license)
 
 
 def build_taxonomy_dict(taxonomy_csv):
     fp = open(taxonomy_csv)
     for i, line in enumerate(fp):
         if not i == 0:
+            line = line.rstrip()
             items = line.split(',')
             taxonomy_dict[items[0]] = items[1]
     fp.close()
@@ -87,8 +98,9 @@ def parse_doctors(doctors_csv):
             doctor.npi = items[NPI_FIELD]
             doctor.license = items[LICENSE_FIELD]
 			
-			# For validation of doctor information
+			# For validation of doctor and address information
             print doctor
+            print address
 			
             # TODO: Fill in the address and name information of the doctor struct
 

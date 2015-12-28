@@ -19,7 +19,7 @@ ZIP_CODE_FIELD = 32
 taxonomy_dict = {}
 
 
-class USAddress:
+class USAddress(object):
     # A simple address data structure
     street_1 = ""
     street_2 = ""
@@ -35,7 +35,7 @@ class USAddress:
                                     self.zip_code)
 
 
-class MedicalDoctor:
+class MedicalDoctor(object):
     # A simple doctor data structure
     first_name = ""
     last_name = ""
@@ -99,15 +99,18 @@ def parse_doctors(doctors_csv):
             doctor.middle_name = items[MIDDLE_NAME_FIELD]
             doctor.npi = items[NPI_FIELD]
             doctor.license = items[LICENSE_FIELD]
-			
-            # For validation of doctor and address information
-            #print doctor
-            #print address
-
-            # insert into DB, needs work
+            # Attempting to convert into dictionary to persist to mongoDB
+            doctor.__dict__
+            
+			# For validation of doctor and address information
+            print doctor
+            print address
+            
+			# insert into DB, needs work
             db.testCollection.insert(doctor)
         except:
             # Taxonomy not found in list
+			# Proper exception handling?
             pass
     fp.close()
 

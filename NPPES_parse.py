@@ -1,11 +1,3 @@
-# Testing python code to read .csv correctly
-import csv
-f = open('test.csv')
-csv_f = csv.reader(f)
-
-for row in csv_f:
-	print row
-
 # Start mongo client, connects to windows service server
 C:\mongodb\bin\mongo.exe
 

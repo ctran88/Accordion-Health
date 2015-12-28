@@ -1,5 +1,7 @@
 from multiprocessing import Pool
 import sys, getopt
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 
 # These globals represent corresponding index locations inside the CSV.
 NPI_FIELD = 0
@@ -98,13 +100,12 @@ def parse_doctors(doctors_csv):
             doctor.npi = items[NPI_FIELD]
             doctor.license = items[LICENSE_FIELD]
 			
-			# For validation of doctor and address information
-            print doctor
-            print address
-			
-            # TODO: Fill in the address and name information of the doctor struct
+            # For validation of doctor and address information
+            #print doctor
+            #print address
 
-            # insert into DB
+            # insert into DB, needs work
+            db.testCollection.insert(doctor)
         except:
             # Taxonomy not found in list
             pass
@@ -113,11 +114,22 @@ def parse_doctors(doctors_csv):
 
 def main(argv):
     if not len(argv) == 2:
-		# Useage text reflects test data
+        # Useage text reflects test data
         print("Useage: parse_doctors.py <doctors_test.csv> <taxonomy_test.csv>")
     else:
+        try:
+            client = MongoClient()
+            print ("Connected to MongoDB successfully.")
+        except ConnectionFailure, e:
+            sys.stderr.write("Could not connect to MongoDB: %s" % e)
+            sys.exit(1)        
+
+        db = client.testdb
+		
         build_taxonomy_dict(argv[1])
         parse_doctors(argv[0])
+		
+        client.close()
 
 
 if __name__ == "__main__":

@@ -1,6 +1,22 @@
 Code,Description
-193200000X,Multi Specialty
-193400000X,Single Specialty
+122300000X,Dentist
+1223D0001X,Dental Public Health
+1223D0004X,Dentist Anesthesiologist
+1223E0200X,Endodontics
+1223G0001X,General Practice
+1223P0106X,Oral and Maxillofacial Pathology
+1223X0008X,Oral and Maxillofacial Radiology
+1223S0112X,Oral and Maxillofacial Surgery
+1223X0400X,Orthodontics and Dentofacial Orthopedics
+1223P0221X,Pediatric Dentistry 
+1223P0300X,Periodontics
+1223P0700X,Prosthodontics
+202C00000X,Independent Medical Examiner
+204C00000X,Neuromusculoskeletal Medicine Sports Medicine
+204R00000X,Electrodiagnostic Medicine
+204D00000X,Neuromusculoskeletal Medicine & OMM
+204E00000X,Oral & Maxillofacial Surgery
+204F00000X,Transplant Surgery
 207K00000X,Allergy & Immunology
 207KA0200X,Allergy
 207KI0005X,Clinical & Laboratory Immunology
@@ -10,15 +26,12 @@ Code,Description
 207LH0002X,Hospice and Palliative Medicine
 207LP2900X,Pain Medicine
 207LP3000X,Pediatric Anesthesiology
-208U00000X,Clinical Pharmacology
-208C00000X,Colon & Rectal Surgery
 207N00000X,Dermatology
 207NI0002X,Clinical & Laboratory Dermatological Immunology
 207ND0900X,Dermatopathology
-207ND0101X,MOHS Micrographic Surgery
+207ND0101X,MOHS-Micrographic Surgery
 207NP0225X,Pediatric Dermatology
 207NS0135X,Procedural Dermatology
-204R00000X,Electrodiagnostic Medicine
 207P00000X,Emergency Medicine
 207PE0004X,Emergency Medical Services
 207PH0002X,Hospice and Palliative Medicine
@@ -35,9 +48,6 @@ Code,Description
 207QB0002X,Obesity Medicine
 207QS1201X,Sleep Medicine
 207QS0010X,Sports Medicine
-208D00000X,General Practice
-208M00000X,Hospitalist
-202C00000X,Independent Medical Examiner
 207R00000X,Internal Medicine
 207RA0401X,Addiction Medicine
 207RA0000X,Adolescent Medicine
@@ -66,7 +76,6 @@ Code,Description
 207RS0012X,Sleep Medicine
 207RS0010X,Sports Medicine
 207RT0003X,Transplant Hepatology
-209800000X,Legal Medicine
 207SG0202X,Clinical Biochemical Genetics
 207SC0300X,Clinical Cytogenetic
 207SG0201X,Clinical Genetics (M.D.)
@@ -78,8 +87,6 @@ Code,Description
 207UN0903X,In Vivo & In Vitro Nuclear Medicine
 207UN0901X,Nuclear Cardiology
 207UN0902X,Nuclear Imaging & Therapy
-204D00000X,Neuromusculoskeletal Medicine & OMM
-204C00000X,Neuromusculoskeletal Medicine Sports Medicine
 207V00000X,Obstetrics & Gynecology
 207VC0200X,Critical Care Medicine
 207VF0040X,Female Pelvic Medicine and Reconstructive Surgery
@@ -88,14 +95,14 @@ Code,Description
 207VH0002X,Hospice and Palliative Medicine
 207VM0101X,Maternal & Fetal Medicine
 207VB0002X,Obesity Medicine
-207VX0000X,Obstetrics
+207VX0000X,Obstetrics 
 207VE0102X,Reproductive Endocrinology
 207W00000X,Ophthalmology
-204E00000X,Oral & Maxillofacial Surgery
+207WX0200X,Ophthalmic Plastic and Reconstructive Surgery
 207X00000X,Orthopaedic Surgery
 207XS0114X,Adult Reconstructive Orthopaedic Surgery
 207XX0004X,Foot and Ankle Surgery
-207XS0106X,Hand Surgery
+207XS0106X,Hand Surgery 
 207XS0117X,Orthopaedic Surgery of the Spine
 207XX0801X,Orthopaedic Trauma
 207XP3100X,Pediatric Orthopaedic Surgery
@@ -128,10 +135,10 @@ Code,Description
 2080A0000X,Adolescent Medicine
 2080C0008X,Child Abuse Pediatrics
 2080I0007X,Clinical & Laboratory Immunology
-2080P0006X,Developmental Behavioral Pediatrics
+2080P0006X,Developmental – Behavioral Pediatrics
 2080H0002X,Hospice and Palliative Medicine
 2080T0002X,Medical Toxicology
-2080N0001X,Neonatal Perinatal Medicine
+2080N0001X,Neonatal-Perinatal Medicine
 2080P0008X,Neurodevelopmental Disabilities
 2080B0002X,Obesity Medicine
 2080P0201X,Pediatric Allergy/Immunology
@@ -140,7 +147,7 @@ Code,Description
 2080P0204X,Pediatric Emergency Medicine
 2080P0205X,Pediatric Endocrinology
 2080P0206X,Pediatric Gastroenterology
-2080P0207X,Pediatric Hematology Oncology
+2080P0207X,Pediatric Hematology-Oncology
 2080P0208X,Pediatric Infectious Diseases
 2080P0210X,Pediatric Nephrology
 2080P0214X,Pediatric Pulmonology
@@ -148,8 +155,8 @@ Code,Description
 2080T0004X,Pediatric Transplant Hepatology
 2080S0012X,Sleep Medicine
 2080S0010X,Sports Medicine
-202K00000X,Phlebology
 208100000X,Physical Medicine & Rehabilitation
+2081P0301X,Brain Injury Medicine
 2081H0002X,Hospice and Palliative Medicine
 2081N0008X,Neuromuscular Medicine
 2081P2900X,Pain Medicine
@@ -167,19 +174,20 @@ Code,Description
 2083P0500X,Preventive Medicine/Occupational Environmental Medicine
 2083P0901X,Public Health & General Preventive Medicine
 2083S0010X,Sports Medicine
-2083P0011X,Undersea and Hyperbaric Medicine
+2083P0011X,Undersea and Hyperbaric Medicine 
+2084P0301X,Brain Injury Medicine
 2084A0401X,Addiction Medicine
 2084P0802X,Addiction Psychiatry
 2084B0040X,Behavioral Neurology & Neuropsychiatry
 2084P0804X,Child & Adolescent Psychiatry
-2084N0600X,Clinical Neurophysiology
+2084N0600X,Clinical Neurophysiology 
 2084D0003X,Diagnostic Neuroimaging
 2084F0202X,Forensic Psychiatry
 2084P0805X,Geriatric Psychiatry
 2084H0002X,Hospice and Palliative Medicine
 2084P0005X,Neurodevelopmental Disabilities
 2084N0400X,Neurology
-2084N0402X,Neurology with Special Qualifications in Child Neurology
+2084N0402X,Neurology with Special Qualifications in Child Neurology 
 2084N0008X,Neuromuscular Medicine
 2084B0002X,Obesity Medicine
 2084P2900X,Pain Medicine
@@ -191,7 +199,7 @@ Code,Description
 2085B0100X,Body Imaging
 2085D0003X,Diagnostic Neuroimaging
 2085R0202X,Diagnostic Radiology
-2085U0001X,Diagnostic Ultrasound
+2085U0001X,Diagnostic Ultrasound 
 2085H0002X,Hospice and Palliative Medicine
 2085N0700X,Neuroradiology
 2085N0904X,Nuclear Radiology
@@ -209,57 +217,13 @@ Code,Description
 2086X0206X,Surgical Oncology
 2086S0127X,Trauma Surgery
 2086S0129X,Vascular Surgery
-208G00000X,Thoracic Surgery (Cardiothoracic Vascular Surgery)
-204F00000X,Transplant Surgery
 208800000X,Urology
 2088F0040X,Female Pelvic Medicine and Reconstructive Surgery
 2088P0231X,Pediatric Urology
-103G00000X,Clinical Neuropsychologist
-103GC0700X,Clinical
-103T00000X,Psychologist
-103TA0400X,Addiction (Substance Use Disorder)
-103TA0700X,Adult Development & Aging
-103TC0700X,Clinical
-103TC2200X,Clinical Child & Adolescent
-103TB0200X,Cognitive & Behavioral
-103TC1900X,Counseling
-103TE1000X,Educational
-103TE1100X,Exercise & Sports
-103TF0000X,Family
-103TF0200X,Forensic
-103TP2701X,Group Psychotherapy
-103TH0004X,Health
-103TH0100X,Health Service
-103TM1700X,Men & Masculinity
-103TM1800X,Mental Retardation & Developmental Disabilities
-103TP0016X,Prescribing (Medical)
-103TP0814X,Psychoanalysis
-103TP2700X,Psychotherapy
-103TR0400X,Rehabilitation
-103TS0200X,School
-103TW0100X,Women
-122300000X,Dentist
-1223D0001X,Dental Public Health
-1223D0004X,Dentist Anesthesiologist
-1223E0200X,Endodontics
-1223G0001X,General Practice
-1223P0106X,Oral and Maxillofacial Pathology
-1223X0008X,Oral and Maxillofacial Radiology
-1223S0112X,Oral and Maxillofacial Surgery
-1223X0400X,Orthodontics and Dentofacial Orthopedics
-1223P0221X,Pediatric Dentistry
-1223P0300X,Periodontics
-1223P0700X,Prosthodontics
-122400000X,Denturist
-125Q00000X,Oral Medicinist
-152W00000X,Optometrist
-174M00000X,Veterinarian
-183500000X,Pharmacist
-213E00000X,Podiatrist
-213ES0103X,Foot & Ankle Surgery
-213ES0131X,Foot Surgery
-213EG0000X,General Practice
-213EP1101X,Primary Podiatric Medicine
-213EP0504X,Public Medicine
-213ER0200X,Radiology
-213ES0000X,Sports Medicine
+208C00000X,Colon & Rectal Surgery
+208D00000X,General Practice
+208G00000X,Thoracic Surgery (Cardiothoracic Vascular Surgery)
+208M00000X,Hospitalist
+208VP0014X,Interventional Pain Medicine
+208VP0000X,Pain Medicine
+209800000X,Legal Medicine

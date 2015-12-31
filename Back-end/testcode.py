@@ -50,6 +50,7 @@ def build_doctor_dict(doctors_csv):
                                'Taxonomy': taxonomy,
                                'Specialization': taxonomy_description}
                 coll.insert(doctor_dict)
+                print doctor_dict.items()
             except:
                 # TODO: exception handling needed
                 pass

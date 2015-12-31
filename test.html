@@ -1,37 +1,15 @@
-<html>
-<head>
-
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 
-var SAMPLE_POST = 'http:/www.mapquestapi.com/geocoding/v1/address?key=YOUR_KEY_HERE&location=Lancaster,PA&callback=renderGeocode';
+var geocoder = new google.maps.Geocoder();
+var address = "new york";
 
-function showBasicURL() {
-    var safe = SAMPLE_POST;
-    document.getElementById('basicSampleUrl').innerHTML = safe.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-};
+geocoder.geocode( { 'address': address}, function(results, status) {
 
-function doClick() {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    showBasicURL();
-    var newURL = SAMPLE_POST.replace('YOUR_KEY_HERE', MWAG1ZYlp9rRTXA2Z03dKrajr4GA96vz);
-    script.src = newURL;
-    document.body.appendChild(script);
-};
-
-function renderGeocode(response) {
-    var html = '';
-    var i = 0;
-    var j = 0;
-	
-	html = "<p>Location: ";
-	var location = response.results[0].locations[0];
-	html += location.adminArea5 + ", " + location.adminArea4 + ", " + location.adminArea3 + ", " + location.adminArea1 + "(" + location.latLng.lat + ", " + location.latLng.lng + ")";
-  	html += "</p>";
-    
-    document.getElementById('narrative').innerHTML = html;
-}
-
+  if (status == google.maps.GeocoderStatus.OK) {
+    var latitude = results[0].geometry.location.lat();
+    var longitude = results[0].geometry.location.lng();
+    alert("Location: " + address + "\n" + "Lat: " + latitude + "\n" + "Lng: " + longitude);
+  } 
+}); 
 </script>
-</head>
-</html>

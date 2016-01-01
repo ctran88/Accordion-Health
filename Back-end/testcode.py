@@ -48,9 +48,13 @@ def build_doctor_dict(doctors_csv):
                                'Middle Name': row[MIDDLE_NAME_FIELD],
                                'License': row[LICENSE_FIELD],
                                'Taxonomy': taxonomy,
-                               'Specialization': taxonomy_description}
+                               'Specialization': taxonomy_description,
+                               'Address': {'Street_1': row[STREET_1_FIELD],
+                                           'Street_2': row[STREET_2_FIELD],
+                                           'City': row[CITY_FIELD],
+                                           'State': row[STATE_FIELD],
+                                           'Zip Code': row[ZIP_CODE_FIELD]}}
                 coll.insert(doctor_dict)
-                print doctor_dict.items()
             except:
                 # TODO: exception handling needed
                 pass

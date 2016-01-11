@@ -1,0 +1,9 @@
+{
+  "name": "doctor-map",
+  "version": "1.0.0",
+  "description": "Accordian Health project",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongodb": "^2.1.3"
+  }

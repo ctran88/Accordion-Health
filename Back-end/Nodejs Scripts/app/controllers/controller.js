@@ -4,9 +4,10 @@ module.exports = function(app) {
 	app.get('/', function(request, response) {
 		var city = request.query.city.toUpperCase(),
 			   state = request.query.state.toUpperCase();
+		var query = {'Address.State': state, 'Address.City': city};
+		
 		if ((city != '') && (state != '')) {
-			var query = {'Address.State': state, 'Address.City': city};
-			var doc = app.locals.db.collection('testcollection3').findOne(query, function(err, doc) {
+			var doc = app.locals.db.collection('testcollection').findOne(query, function(err, doc) {
 				if (err) {
 					throw err;
 					response.send(err);
@@ -14,7 +15,7 @@ module.exports = function(app) {
 					response.send(doc);
 				}
 			});
-		};
+		}
 	});
 	
 };

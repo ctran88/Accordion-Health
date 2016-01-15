@@ -4,6 +4,10 @@ import csv
 from pymongo import MongoClient
 # from pymongo.errors import ConnectionFailure
 
+# Constants for coordinates function
+ZIP = 0
+COORD_START = 3
+
 # Constants for taxonomy function
 TAX_CODE = 0
 TAX_DESC = 1
@@ -24,7 +28,7 @@ ZIP_CODE_FIELD = 32
 # Global MongoDB variables
 client = MongoClient()
 db = client.testdb
-coll = db.testcollection3
+coll = db.testcollection
 
 # Global coordinate and taxonomy dictionaries
 coord_dict = {}
@@ -37,9 +41,11 @@ def build_coord_dict(coord_csv):
         reader = csv.reader(fp)
         next(reader, None)
         for row in reader:
-            coord_dict[row[0]] = coord_dict.get(row[0], {})
-            coord_dict[row[0]][row[1]] = coord_dict[row[0]].get(row[1], [])
-            coord_dict[row[0]][row[1]].append(row[2:])
+            key = row[ZIP]
+            if key in coord_dict:
+                print(key + ' already in coord_dict')
+                pass
+            coord_dict[key] = row[COORD_START:]
 
 
 # This function builds a dictionary to reference all January 2016 taxonomy codes
@@ -73,14 +79,13 @@ def build_doctor_dict(doctors_csv):
                                            'Street_2': row[STREET_2_FIELD],
                                            'City': row[CITY_FIELD],
                                            'State': row[STATE_FIELD],
-                                           'Zip Code': row[ZIP_CODE_FIELD]}
+                                           'Zip Code': row[ZIP_CODE_FIELD][:5]}
                                }
 
                 # Gets the coordinates for the doctor's city
-                doc_state = doctor_dict.get('Address', None).get('State', None)
-                doc_city = doctor_dict.get('Address', None).get('City', None).title()
-                latitude = coord_dict[doc_state][doc_city][0][0]
-                longitude = coord_dict[doc_state][doc_city][0][1]
+                doc_zip = doctor_dict.get('Address', None).get('Zip Code', None)
+                latitude = coord_dict[doc_zip][0]
+                longitude = coord_dict[doc_zip][1]
 
                 # Updates Address dictionary with coordinates
                 doctor_dict['Address']['Latitude'] = latitude
@@ -96,7 +101,7 @@ def build_doctor_dict(doctors_csv):
 
 def main(argv):
     if not len(argv) == 3:
-        print("Usage: NPPES_parse.py <doctors_csv.csv> <taxonomy_csv.csv> <coordinates_csv.csv>")
+        print("Usage: NPPES_parse.py <doctors.csv> <taxonomy.csv> <coordinates.csv>")
     else:
         """try:
             # TODO: is this part needed?

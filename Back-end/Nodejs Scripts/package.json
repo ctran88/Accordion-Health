@@ -1,9 +1,25 @@
 {
   "name": "doctor-map",
   "version": "1.0.0",
-  "description": "Accordian Health project",
+  "description": "Accordion Health Project",
   "main": "server.js",
   "dependencies": {
     "express": "^4.13.3",
-    "mongodb": "^2.1.3"
-  }
+    "mongodb": "^2.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ctran88/Accordion-Health-Project.git"
+  },
+  "author": "Christopher Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ctran88/Accordion-Health-Project/issues"
+  },
+  "homepage": "https://github.com/ctran88/Accordion-Health-Project#readme"
+}

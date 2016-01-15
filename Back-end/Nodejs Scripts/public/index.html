@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css">
+		<link rel="stylesheet" href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css">
 		<style type="text/css"></style>
 	</head>
 	<body>
@@ -86,6 +87,7 @@
 		</div>
 
 		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
 		<script>
 			var cities = new L.LayerGroup();
 
@@ -119,6 +121,19 @@
 			};
 
 			L.control.layers(baseLayers, overlays).addTo(map);
+			
+			var osmGeocoder = new L.Control.OSMGeocoder({
+				collapsed: false,
+				position: 'bottomright',
+				text: 'Locate',
+				});
+				
+			map.addControl(osmGeocoder);
+			
+			map.on('viewreset', function(e) {
+				alert("it works");
+			});
+			
 		</script>
 	</body>
 </html>

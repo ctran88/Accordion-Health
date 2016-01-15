@@ -8,7 +8,7 @@ var MongoClient = require('mongodb').MongoClient,
 	   app = express();
 
 // connect to mongoDB
-MongoClient.connect('mongodb://localhost/testdb', function(err, db) {
+MongoClient.connect(config.db, function(err, db) {
 	if (err) {
 		throw err;
 		console.dir(err);
@@ -16,7 +16,7 @@ MongoClient.connect('mongodb://localhost/testdb', function(err, db) {
 	app.locals.db = db;
 	console.log('Connected to MongoDB successfully.');
 });
-	   
+
 // start application
 app.listen(config.port);
 console.log(process.env.NODE_ENV + ' server running at http://localhost:' + config.port);

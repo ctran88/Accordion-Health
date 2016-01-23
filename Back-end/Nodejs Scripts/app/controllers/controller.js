@@ -1,21 +1,18 @@
 module.exports = function(app) {
-	
 	app.set('json spaces', 2);
-	app.get('/', function(request, response) {
-		var city = request.query.city.toUpperCase(),
-			   state = request.query.state.toUpperCase();
-		var query = {'Address.State': state, 'Address.City': city};
-		
-		if ((city != '') && (state != '')) {
-			var doc = app.locals.db.collection('testcollection').findOne(query, function(err, doc) {
-				if (err) {
-					throw err;
-					response.send(err);
-				} else {
-					response.send(doc);
-				}
-			});
-		}
-	});
 	
+	// route to view full mongodb dataset
+	app.get('/', function(req, res) {
+		var docArray = [];
+			
+		app.locals.db.collection('testcollection').find({}, {_id: 0, 'First Name': 1, 'Last Name': 1, Specialization: 1, Address: 1}).toArray(function(err, result) {
+			if (err) throw err;
+			
+			for (var i = 0; i < result.length; i++) {
+				docArray.push(result[i]);
+			}
+			
+			return res.render('index', {jsonData: docArray});
+		});
+	});
 };

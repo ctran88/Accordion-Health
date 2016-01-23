@@ -1,11 +1,9 @@
 module.exports = function(app) {
-	app.set('json spaces', 2);
-	
 	// route to view full mongodb dataset
 	app.get('/', function(req, res) {
 		var docArray = [];
 			
-		app.locals.db.collection('testcollection').find({}, {_id: 0, 'First Name': 1, 'Last Name': 1, Specialization: 1, Address: 1}).toArray(function(err, result) {
+		app.locals.db.collection('NPPES_collection').find({}, {_id: 0, Specialization: 1, 'Address.City': 1, 'Address.State': 1, 'Address.Zip Code': 1, 'Address.Latitude': 1, 'Address.Longitude': 1}).toArray(function(err, result) {
 			if (err) throw err;
 			
 			for (var i = 0; i < result.length; i++) {

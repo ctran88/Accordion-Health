@@ -2,7 +2,7 @@
   "name": "doctor-map",
   "version": "1.0.0",
   "description": "Accordion Health Project",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "express": "^4.13.3",
     "jade": "^1.11.0",

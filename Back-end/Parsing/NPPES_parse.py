@@ -2,7 +2,6 @@
 import sys
 import csv
 from pymongo import MongoClient
-# from pymongo.errors import ConnectionFailure
 
 # Constants for coordinates function
 ZIP = 0
@@ -28,7 +27,7 @@ ZIP_CODE_FIELD = 32
 # Global MongoDB variables
 client = MongoClient()
 db = client.testdb
-coll = db.testcollection
+coll = db.NPPES_collection
 
 # Global coordinate and taxonomy dictionaries
 coord_dict = {}
@@ -43,7 +42,6 @@ def build_coord_dict(coord_csv):
         for row in reader:
             key = row[ZIP]
             if key in coord_dict:
-                print(key + ' already in coord_dict')
                 pass
             coord_dict[key] = row[COORD_START:]
 
@@ -93,9 +91,7 @@ def build_doctor_dict(doctors_csv):
 
                 # Insert into database
                 coll.insert(doctor_dict)
-            except:# (IOError, RuntimeError) as e:
-                # TODO: exception handling needed
-                # print(e.message)
+            except (KeyError, RuntimeError):
                 pass
 
 
@@ -103,13 +99,6 @@ def main(argv):
     if not len(argv) == 3:
         print("Usage: NPPES_parse.py <doctors.csv> <taxonomy.csv> <coordinates.csv>")
     else:
-        """try:
-            # TODO: is this part needed?
-            client = MongoClient()
-            print ("Connected to MongoDB successfully.")
-        except ConnectionFailure, e:
-            sys.stderr.write("Could not connect to MongoDB: %s" % e)
-            sys.exit(1)"""
         build_coord_dict(argv[2])
         build_taxonomy_dict(argv[1])
         build_doctor_dict(argv[0])

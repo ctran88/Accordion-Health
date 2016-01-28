@@ -1,128 +1,100 @@
 extends layout
 
 block head
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css')
-    link(rel='stylehseet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css')
-    link(rel='stylesheet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css')
-    link(rel='stylesheet', href='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css')
-    link(rel='stylesheet', href='css/style.css')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css')
+  link(rel='stylehseet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css')
+  link(rel='stylesheet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css')
+  link(rel='stylesheet', href='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800', type='text/css')
+  link(rel='stylesheet', href='css/style.css')
 
 block body
-    #map(style='width: 800px; height: 600px')
+  script(src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js')
+  script(src='http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js')
+  script(src='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js')
+  script(src='js/pointsFunctions.js')
 
-    script(src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js')
-    script(src='http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js')
-    script(src='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js')
-    script(src='js/pointsFunctions.js')
+  .container
+    #searchbar
+      #header NPPES Search
+      .radiobar
+        input#city(type='radio', name='search_res', value='city', checked='checked')
+        label(for='city') City
 
-    input(type='radio', name='search_res', value='city', checked='checked')
-    | City, State
-    input(type='radio', name='search_res', value='state')
-    | State Only
-    input(type='radio', name='search_res', value='zip')
-    | Zip Code
-    input(type='radio', name='search_res', value='specialty')
-    | Specialty
-    #qheader
+        input#state(type='radio', name='search_res', value='state')
+        label(for='state') State Only
+
+        input#zip(type='radio', name='search_res', value='zip')
+        label(for='zip') Zip Code
+
+        input#specialty(type='radio', name='search_res', value='specialty')
+        label(for='specialty') Specialty
+
       form#tfnewsearch(method='get', action='localhost:8000')
-        input#tftextinput.tftextinput(type='text', name='q', size='32', maxlength='120')
+        input#tftextinput.tftextinput(type='text', name='q', size='21', maxlength='120')
         input.tfbutton(type='submit', value='search')
       .tfclear
 
+    #map
+
 block script
-    script.
-      // search function
-      var search_bar = document.getElementById('tfnewsearch');
-      search_bar.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // regex to strip special characters and splits string if city, state
-        var search_query = document.getElementById('tftextinput').value
-          .replace(/[^\w\s ]/g, '')
-          .split(' ');
-        var search_type = document.getElementsByName('search_res');
-        var search_term = '',
-            search_value = '';
+  script.
+    // search function
+    var search_button = document.getElementById('tfnewsearch');
+    search_button.addEventListener('submit', setUrlParam);
 
-        // gets search type
-        for (var i = 0; i < search_type.length; i++) {
-          if (search_type[i].checked) {
-            search_value = search_type[i].value;
-            break;
-          }
-        }
+    // markers layer
+    var markers = new L.markerClusterGroup({
+      iconCreateFunction: function(cluster) {
+        return L.divIcon({ html: '<b>' + cluster.getChildCount() + '</b>', className: 'myCluster', iconSize: L.point(20, 20) });
+      }
+    });
 
-        // sets url search parameters
-        switch (search_value) {
-          case 'city':
-            search_term += 'city=' + search_query[0] + '&state=' + search_query[1];
-            break;
-          case 'state':
-            search_term += 'state=' + search_query;
-            break;
-          case 'zip':
-            search_term += 'zip=' + search_query;
-            break;
-          case 'specialty':
-            search_term += 'specialty=' + search_query;
-            break;
-        }
+    // doctors layer
+    var doctors = new L.LayerGroup();
 
-        window.location.href = 'search?' + search_term;
-      });
+    var jsonArray = !{JSON.stringify(jsonData)};
+    var points = buildPoints(jsonArray);
 
-      // markers layer
-      var markers = new L.markerClusterGroup({
-        iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<b>' + cluster.getChildCount() + '</b>', className: 'myCluster', iconSize: L.point(20, 20) });
-        }
-      });
+    // adds points to markers layer and doctors layer
+    updatePoints(points);
 
-      // doctors layer
-      var doctors = new L.LayerGroup();
+    // credits layer
+    var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
+    
+    // grayscale and streets layer
+    var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+        streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+    
+    // map layer
+    var map = L.map('map', {
+      center: [38, -96.5],
+      zoom: 5,
+      layers: [grayscale, doctors]
+    });
+    
+    // base layers options
+    var baseLayers = {
+      "Grayscale": grayscale,
+      "Streets": streets
+    };
+    
+    // overlays option
+    var overlays = {
+      "Doctors": doctors
+    };
 
-      var jsonArray = !{JSON.stringify(jsonData)};
-      var points = buildPoints(jsonArray);
+    L.control.layers(baseLayers, overlays).addTo(map);
 
-      // adds points to markers layer and doctors layer
-      updatePoints(points);
+    // geocoder layer
+    var osmGeocoder = new L.Control.OSMGeocoder({
+      collapsed: false,
+      position: 'bottomright',
+      text: 'Locate',
+    });
 
-      // credits layer
-      var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                   '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                   'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-          mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ';
-      
-      // grayscale and streets layer
-      var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
-          streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
-      
-      // map layer
-      var map = L.map('map', {
-        center: [30.2837, -97.7326],
-        zoom: 10,
-        layers: [grayscale, doctors]
-      });
-      
-      // base layers options
-      var baseLayers = {
-        "Grayscale": grayscale,
-        "Streets": streets
-      };
-      
-      // overlays option
-      var overlays = {
-        "Doctors": doctors
-      };
-
-      L.control.layers(baseLayers, overlays).addTo(map);
-
-      // geocoder layer
-      var osmGeocoder = new L.Control.OSMGeocoder({
-        collapsed: false,
-        position: 'bottomright',
-        text: 'Locate',
-      });
-
-      map.addControl(osmGeocoder);
+    map.addControl(osmGeocoder);

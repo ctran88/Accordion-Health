@@ -1,6 +1,8 @@
-# from multiprocessing import Pool
+import multiprocessing as mp
+import os
 import sys
 import csv
+import time
 from pymongo import MongoClient
 
 # Constants for coordinates function
@@ -26,8 +28,8 @@ ZIP_CODE_FIELD = 32
 
 # Global MongoDB variables
 client = MongoClient()
-db = client.testdb
-coll = db.NPPES_collection
+db = client.NPPES
+coll = db.NPI_collection
 
 # Global coordinate and taxonomy dictionaries
 coord_dict = {}
@@ -36,6 +38,7 @@ taxonomy_dict = {}
 
 # This function builds a dictionary to reference all US city coordinates
 def build_coord_dict(coord_csv):
+    start = time.time()
     with open(coord_csv) as fp:
         reader = csv.reader(fp)
         next(reader, None)
@@ -44,19 +47,25 @@ def build_coord_dict(coord_csv):
             if key in coord_dict:
                 pass
             coord_dict[key] = row[COORD_START:]
+    end = time.time()
+    print 'Time to build coord_dict:', end-start
 
 
 # This function builds a dictionary to reference all January 2016 taxonomy codes
 def build_taxonomy_dict(taxonomy_csv):
+    start = time.time()
     with open(taxonomy_csv) as fp:
         reader = csv.reader(fp)
         next(reader, None)
         for row in reader:
             taxonomy_dict[row[TAX_CODE]] = row[TAX_DESC]
+    end = time.time()
+    print 'Time to build taxonomy_dict:', end-start
 
 
 # This function builds one dictionary per doctor and attaches the corresponding coordinates before sending to database
 def build_doctor_dict(doctors_csv):
+    start = time.time()
     with open(doctors_csv) as fp:
         reader = csv.reader(fp)
         next(reader, None)
@@ -93,12 +102,38 @@ def build_doctor_dict(doctors_csv):
                 coll.insert(doctor_dict)
             except (KeyError, RuntimeError):
                 pass
+    end = time.time()
+    print 'Time to build doctor_dict:', end-start
 
 
 def main(argv):
     if not len(argv) == 3:
         print("Usage: NPPES_parse.py <doctors.csv> <taxonomy.csv> <coordinates.csv>")
     else:
+        # file_size = os.path.getsize(argv[0])
+        # split_size = 100*1024*1024
+        #
+        # if file_size > split_size:
+        #     pool = mp.Pool(mp.cpu_count())
+        #     cursor = 0
+        #     results = []
+        #     with open(argv[0]) as f:
+        #         for chunk in xrange(file_size // split_size):
+        #             if cursor + split_size > file_size:
+        #                 end = file_size
+        #             else:
+        #                 end = cursor + split_size
+        #
+        #             f.seek(end)
+        #             f.readline()
+        #
+        #             end = f.tell()
+        #
+        #             proc = pool.apply_async(func_wrapper, argv)
+        #             results.append(proc)
+        #
+        #             cursor = end
+
         build_coord_dict(argv[2])
         build_taxonomy_dict(argv[1])
         build_doctor_dict(argv[0])

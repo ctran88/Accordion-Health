@@ -29,7 +29,7 @@ ZIP_CODE_FIELD = 32
 # Global MongoDB variables
 client = MongoClient()
 db = client.NPPES
-coll = db.testcollection
+coll = db.NPI_collection
 
 # Global coordinate and taxonomy dictionaries
 coord_dict = {}

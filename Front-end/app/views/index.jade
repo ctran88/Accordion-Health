@@ -5,19 +5,18 @@ block head
   link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css')
   link(rel='stylehseet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css')
   link(rel='stylesheet', href='http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css')
-  link(rel='stylesheet', href='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css')
-  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800', type='text/css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato:400,700', type='text/css')
   link(rel='stylesheet', href='css/style.css')
 
 block body
   script(src='http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js')
   script(src='http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js')
-  script(src='http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js')
-  script(src='js/pointsFunctions.js')
+  script(src='js/indexFunctions.js')
 
   .container
     #searchbar
-      #header NPPES Search
+      #header
+        a(href='/') NPPES Search
       .radiobar
         input#city(type='radio', name='search_res', value='city', checked='checked')
         label(for='city') City
@@ -36,14 +35,13 @@ block body
         input.tfbutton(type='submit', value='search')
       .tfclear
 
+      <br>
+      span#s1 
+
     #map
 
 block script
   script.
-    // search function
-    var search_button = document.getElementById('tfnewsearch');
-    search_button.addEventListener('submit', setUrlParam);
-
     // markers layer
     var markers = new L.markerClusterGroup({
       iconCreateFunction: function(cluster) {
@@ -82,19 +80,19 @@ block script
       "Grayscale": grayscale,
       "Streets": streets
     };
+
+    L.control.layers(baseLayers).addTo(map);
+
+    // search function
+    var search_button = document.getElementById('tfnewsearch');
+    search_button.addEventListener('submit', setUrlParam);
+
+    // search result counter
+    var result_count = null;
+    result_count = jsonArray.length;
     
-    // overlays option
-    var overlays = {
-      "Doctors": doctors
-    };
-
-    L.control.layers(baseLayers, overlays).addTo(map);
-
-    // geocoder layer
-    var osmGeocoder = new L.Control.OSMGeocoder({
-      collapsed: false,
-      position: 'bottomright',
-      text: 'Locate',
-    });
-
-    map.addControl(osmGeocoder);
+    if(result_count != null) {
+      window.onload = function() {
+        document.getElementById('s1').innerHTML = result_count + ' doctors found';
+      }
+    }

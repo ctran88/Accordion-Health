@@ -16,6 +16,74 @@ module.exports = function(app) {
 			});
 	}
 
+	// function to change state names to abbreviations
+	function stateAbbr(input) {
+		var states = [
+		        ['arizona', 'AZ'],
+		        ['alabama', 'AL'],
+		        ['alaska', 'AK'],
+		        ['arizona', 'AZ'],
+		        ['arkansas', 'AR'],
+		        ['california', 'CA'],
+		        ['colorado', 'CO'],
+		        ['connecticut', 'CT'],
+		        ['delaware', 'DE'],
+		        ['florida', 'FL'],
+		        ['georgia', 'GA'],
+		        ['hawaii', 'HI'],
+		        ['idaho', 'ID'],
+		        ['illinois', 'IL'],
+		        ['indiana', 'IN'],
+		        ['iowa', 'IA'],
+		        ['kansas', 'KS'],
+		        ['kentucky', 'KY'],
+		        ['kentucky', 'KY'],
+		        ['louisiana', 'LA'],
+		        ['Maine', 'ME'],
+		        ['maryland', 'MD'],
+		        ['massachusetts', 'MA'],
+		        ['michigan', 'MI'],
+		        ['minnesota', 'MN'],
+		        ['mississippi', 'MS'],
+		        ['missouri', 'MO'],
+		        ['montana', 'MT'],
+		        ['nebraska', 'NE'],
+		        ['nevada', 'NV'],
+		        ['new hampshire', 'NH'],
+		        ['new jersey', 'NJ'],
+		        ['new mexico', 'NM'],
+		        ['new york', 'NY'],
+		        ['north carolina', 'NC'],
+		        ['north dakota', 'ND'],
+		        ['ohio', 'OH'],
+		        ['oklahoma', 'OK'],
+		        ['oregon', 'OR'],
+		        ['pennsylvania', 'PA'],
+		        ['rhode island', 'RI'],
+		        ['south carolina', 'SC'],
+		        ['south dakota', 'SD'],
+		        ['tennessee', 'TN'],
+		        ['texas', 'TX'],
+		        ['utah', 'UT'],
+		        ['vermont', 'VT'],
+		        ['virginia', 'VA'],
+		        ['washington', 'WA'],
+		        ['west virginia', 'WV'],
+		        ['wisconsin', 'WI'],
+		        ['wyoming', 'WY'],
+		    ];
+
+		input = input.replace(/\w/g, function(txt){return txt.toLowerCase();});
+		for (var i = 0; i < states.length; i++) {
+			if (states[i][0] == input) {
+				return (states[i][1]);
+				break;
+			}
+		}
+
+		return input;
+	}
+
 	// route to display empty map
 	app.get('/', function(req, res) {
 		res.render('index', {jsonData: emptyArray});
@@ -28,14 +96,18 @@ module.exports = function(app) {
 
 	// route to pull mongodb data via query parameters
 	app.get('/search', function(req, res) {
+		var state = '';
+
 		// city query
 		if (req.query.city && req.query.state) {
-			query = {'Address.City': req.query.city.toUpperCase(), 'Address.State': req.query.state.toUpperCase()};
+			state = stateAbbr(req.query.state).toUpperCase();
+			query = {'Address.City': req.query.city.toUpperCase(), 'Address.State': state};
 		}
 
 		// state query
 		else if (req.query.state) {
-			query = {'Address.State': req.query.state.toUpperCase()};
+			state = stateAbbr(req.query.state).toUpperCase();
+			query = {'Address.State': state};
 		}
 
 		// zip code query

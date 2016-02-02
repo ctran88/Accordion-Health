@@ -27,11 +27,12 @@ function updatePoints(points) {
 
 // sets URL parameters depending on search type
 function setUrlParam(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    // regex to strip special characters and splits string if city, state
-    var search_query = document.getElementById('tftextinput').value
-      .replace(/[^\w\s]/g, '');
+  var search_query = document.getElementById('tftextinput').value;
+  
+  // only executes if search box is not empty
+  if(search_query != '') {
     var search_type = document.getElementsByName('search_res');
     var search_term = '',
         search_value = '';
@@ -47,8 +48,8 @@ function setUrlParam(e) {
     // sets url search parameters
     switch (search_value) {
       case 'city':
-        search_query = search_query.split(' ');
-        search_term += 'city=' + search_query[0] + '&state=' + search_query[1];
+        search_query = search_query.split(',');
+        search_term += 'city=' + search_query[0] + '&state=' + search_query[1].trim();
         break;
       case 'state':
         search_term += 'state=' + search_query;
@@ -62,4 +63,5 @@ function setUrlParam(e) {
     }
 
     window.location.href = 'search?' + search_term;
+  }
 }

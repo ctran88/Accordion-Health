@@ -29,7 +29,7 @@ ZIP_CODE_FIELD = 32
 # Global MongoDB variables
 client = MongoClient()
 db = client.NPPES
-coll = db.NPI_collection
+coll = db.testcollection
 
 # Global coordinate and taxonomy dictionaries
 coord_dict = {}
@@ -108,7 +108,7 @@ def build_doctor_dict(doctors_csv):
 
 def main(argv):
     if not len(argv) == 3:
-        print("Usage: NPPES_parse.py <doctors.csv> <taxonomy.csv> <coordinates.csv>")
+        print("Usage: NPPES_parse.py <npidata_20050523-20151213.csv> <taxonomy.csv> <coordinates.csv>")
     else:
         # file_size = os.path.getsize(argv[0])
         # split_size = 100*1024*1024
@@ -139,6 +139,8 @@ def main(argv):
         build_doctor_dict(argv[0])
 
         client.close()
+
+        print("Database setup complete.")
 
 
 if __name__ == "__main__":

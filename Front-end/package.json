@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ctran88/Accordion-Health-Project.git"
+    "url": "git+https://github.com/ctran88/Accordion-Health.git"
   },
   "author": "Christopher Tran",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ctran88/Accordion-Health-Project/issues"
+    "url": "https://github.com/ctran88/Accordion-Health/issues"
   },
-  "homepage": "https://github.com/ctran88/Accordion-Health-Project#readme"
+  "homepage": "https://github.com/ctran88/Accordion-Health#readme"
 }

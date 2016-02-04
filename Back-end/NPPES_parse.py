@@ -1,5 +1,3 @@
-import multiprocessing as mp
-import os
 import sys
 import csv
 import time
@@ -110,30 +108,6 @@ def main(argv):
     if not len(argv) == 3:
         print("Usage: NPPES_parse.py <npidata_20050523-20151213.csv> <taxonomy.csv> <coordinates.csv>")
     else:
-        # file_size = os.path.getsize(argv[0])
-        # split_size = 100*1024*1024
-        #
-        # if file_size > split_size:
-        #     pool = mp.Pool(mp.cpu_count())
-        #     cursor = 0
-        #     results = []
-        #     with open(argv[0]) as f:
-        #         for chunk in xrange(file_size // split_size):
-        #             if cursor + split_size > file_size:
-        #                 end = file_size
-        #             else:
-        #                 end = cursor + split_size
-        #
-        #             f.seek(end)
-        #             f.readline()
-        #
-        #             end = f.tell()
-        #
-        #             proc = pool.apply_async(func_wrapper, argv)
-        #             results.append(proc)
-        #
-        #             cursor = end
-
         build_coord_dict(argv[2])
         build_taxonomy_dict(argv[1])
         build_doctor_dict(argv[0])

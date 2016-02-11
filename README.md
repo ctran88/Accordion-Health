@@ -16,8 +16,8 @@ This repository is used to track updates and show my progression for my intervie
 ###### To initialize database:
 1. Unzip the Full Replacement Monthly NPI File and place **npidata_20050523-20151213.csv** in the **Back-end** folder.
 2. Initialize MongoDB server by typing **cd (mongodb installation dir)/bin/mongod** in the command line.
-3. Double-click **init.sh**.
+3. Double-click **init.sh** (Mac users) or **init.bat** (Windows users).
 
 ###### To run local instance of map:
-1. Double-click **localrun.sh**.
+1. Double-click **localrun.sh** (Mac users) or **localrun.bat** (Windows users).
 2. Open browser and go to **localhost:8000**.
